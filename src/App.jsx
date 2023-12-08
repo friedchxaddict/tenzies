@@ -15,12 +15,15 @@ function App() {
 
   let diceElement = dice.map((die) => <Die value={die} />);
 
-  console.log(allNewDice());
+  function rollDice() {
+    setDice(allNewDice());
+  }
 
   return (
     <>
       <main>
         <div className="container">{diceElement}</div>
+        <button onClick={rollDice}>Roll</button>
       </main>
     </>
   );
