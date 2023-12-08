@@ -2,7 +2,11 @@
 import './App.css';
 
 function Die(prop) {
-  return <div>{prop.value}</div>;
+  return (
+    <div className="die-box">
+      <h2 className="die-num">{prop.value}</h2>
+    </div>
+  );
 }
 
 export default Die;

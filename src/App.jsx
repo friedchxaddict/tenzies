@@ -17,8 +17,6 @@ function App() {
           <Die value={1}></Die>
           <Die value={1}></Die>
           <Die value={1}></Die>
-          <Die value={1}></Die>
-          <Die value={1}></Die>
         </div>
       </main>
     </>
