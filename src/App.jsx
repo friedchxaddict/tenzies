@@ -18,13 +18,26 @@ function App() {
     return newDice;
   }
 
-  let diceElement = dice.map((die) => (
-    <Die key={die.id} value={die.value} isHeld={die.isHeld} />
-  ));
-
   function rollDice() {
     setDice(allNewDice());
   }
+
+  function holdDice(id) {
+    setDice((oldDice) =>
+      oldDice.map((die) => {
+        return die.id === id ? { ...die, isHeld: !die.isHeld } : die;
+      })
+    );
+  }
+
+  const diceElement = dice.map((die) => (
+    <Die
+      key={die.id}
+      value={die.value}
+      isHeld={die.isHeld}
+      holdDice={() => holdDice(die.id)}
+    />
+  ));
 
   return (
     <>
