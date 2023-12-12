@@ -2,7 +2,6 @@
 import './App.css';
 
 function Die(prop) {
-  console.log(prop);
   const styles = { backgroundColor: prop.isHeld ? '#59E391' : 'white' };
 
   return (
