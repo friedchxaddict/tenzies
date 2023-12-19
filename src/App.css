@@ -57,6 +57,12 @@ main {
   cursor: pointer;
 }
 
+.die-box img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
 .die-num {
   font-size: 25px;
 }

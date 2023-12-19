@@ -6,7 +6,8 @@ function Die(prop) {
 
   return (
     <div className="die-box" style={styles} onClick={prop.holdDice}>
-      <h2 className="die-num">{prop.value}</h2>
+      {/*<h2 className="die-num">{prop.value}</h2>*/}
+      <img src={`/img/dieFace${prop.value}.png`}></img>
     </div>
   );
 }
