@@ -7,6 +7,7 @@ import './App.css';
 function App() {
   const [dice, setDice] = useState(allNewDice());
   const [tenzies, setTenzies] = useState(false);
+  const [counter, setCounter] = useState(0);
 
   function generateNewDie() {
     return {
@@ -73,8 +74,14 @@ function App() {
           Roll until all dice are the same. Click each die to freeze it at its
           current value between rolls.
         </p>
+        <h3>Rolls: {counter}</h3>
         <div className="container">{diceElement}</div>
-        <button className="die-button" onClick={rollDice}>
+        <button
+          className="die-button"
+          onClick={() => {
+            rollDice();
+            setCounter(counter + 1);
+          }}>
           {tenzies ? 'New Game' : 'Roll'}
         </button>
       </main>
