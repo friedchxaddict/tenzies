@@ -3,11 +3,14 @@ import { nanoid } from 'nanoid';
 import ReactConfetti from 'react-confetti';
 import Die from './Die';
 import './App.css';
+import GameStats from './GameStats';
 
 function App() {
   const [dice, setDice] = useState(allNewDice());
   const [tenzies, setTenzies] = useState(false);
   const [counter, setCounter] = useState(0);
+  const [time, setTime] = useState(0);
+  const [running, setRunning] = useState(false);
 
   function generateNewDie() {
     return {
@@ -23,9 +26,22 @@ function App() {
     const allSameValue = dice.every((die) => die.value === firstValue);
     if (allHeld && allSameValue) {
       setTenzies(true);
-      console.log('You won and testing!');
+      setRunning(false);
+      console.log('You won!');
     }
   }, [dice]);
+
+  useEffect(() => {
+    let interval;
+    if (running) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime + 10);
+      }, 10);
+    } else if (!running) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [running]);
 
   function allNewDice() {
     const newDice = [];
@@ -37,18 +53,22 @@ function App() {
 
   function rollDice() {
     if (!tenzies) {
-      setDice((OldDice) =>
-        OldDice.map((die) => {
+      setRunning(true);
+      setDice((oldDice) =>
+        oldDice.map((die) => {
           return die.isHeld ? die : generateNewDie();
         })
       );
     } else {
       setTenzies(false);
       setDice(allNewDice);
+      setRunning(false);
     }
   }
 
   function holdDice(id) {
+    setRunning(true);
+
     setDice((oldDice) =>
       oldDice.map((die) => {
         return die.id === id ? { ...die, isHeld: !die.isHeld } : die;
@@ -75,6 +95,7 @@ function App() {
           current value between rolls.
         </p>
         <h3>Rolls: {counter}</h3>
+        <GameStats time={time} />
         <div className="container">{diceElement}</div>
         <button
           className="die-button"
