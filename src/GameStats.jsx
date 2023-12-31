@@ -5,7 +5,7 @@ const GameStats = (time) => {
 
   return (
     <>
-      <p>Time Elapsed:</p>
+      <p>Time Elapse:</p>
       <span>
         {minutes}:{seconds}:{milliseconds}
       </span>
