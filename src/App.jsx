@@ -11,6 +11,9 @@ function App() {
   const [counter, setCounter] = useState(0);
   const [time, setTime] = useState(0);
   const [running, setRunning] = useState(false);
+  const [bestRolls, setBestRolls] = useState(
+    JSON.parse(localStorage.getItem('bestRolls')) || 0
+  );
 
   function generateNewDie() {
     return {
@@ -42,6 +45,10 @@ function App() {
     }
     return () => clearInterval(interval);
   }, [running]);
+
+  useEffect(() => {
+    localStorage.setItem('bestRolls', JSON.stringify(bestRolls));
+  });
 
   function allNewDice() {
     const newDice = [];
