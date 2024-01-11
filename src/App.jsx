@@ -30,7 +30,7 @@ function App() {
     if (allHeld && allSameValue) {
       setTenzies(true);
       setRunning(false);
-      console.log('You won!');
+      console.log('You won Tenzies!');
     }
   }, [dice]);
 
