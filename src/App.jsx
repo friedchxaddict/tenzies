@@ -30,6 +30,7 @@ function App() {
     if (allHeld && allSameValue) {
       setTenzies(true);
       setRunning(false);
+      setRecords();
       console.log('You won Tenzies!');
     }
   }, [dice]);
@@ -75,12 +76,18 @@ function App() {
 
   function holdDice(id) {
     setRunning(true);
-
+    setCounter((prevCount) => prevCount + 1);
     setDice((oldDice) =>
       oldDice.map((die) => {
         return die.id === id ? { ...die, isHeld: !die.isHeld } : die;
       })
     );
+  }
+
+  function setRecords() {
+    if (!bestRolls || counter < bestRolls) {
+      setBestRolls(counter);
+    }
   }
 
   const diceElement = dice.map((die) => (
@@ -108,7 +115,6 @@ function App() {
           className="die-button"
           onClick={() => {
             rollDice();
-            setCounter(counter + 1);
           }}>
           {tenzies ? 'New Game' : 'Roll'}
         </button>
