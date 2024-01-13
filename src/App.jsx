@@ -11,9 +11,6 @@ function App() {
   const [counter, setCounter] = useState(0);
   const [time, setTime] = useState(0);
   const [running, setRunning] = useState(false);
-  const [bestRolls, setBestRolls] = useState(
-    JSON.parse(localStorage.getItem('bestRolls')) || 0
-  );
 
   function generateNewDie() {
     return {
@@ -30,8 +27,7 @@ function App() {
     if (allHeld && allSameValue) {
       setTenzies(true);
       setRunning(false);
-      setRecords();
-      console.log('You won Tenzies!');
+      console.log('You won!');
     }
   }, [dice]);
 
@@ -46,10 +42,6 @@ function App() {
     }
     return () => clearInterval(interval);
   }, [running]);
-
-  useEffect(() => {
-    localStorage.setItem('bestRolls', JSON.stringify(bestRolls));
-  });
 
   function allNewDice() {
     const newDice = [];
@@ -76,18 +68,12 @@ function App() {
 
   function holdDice(id) {
     setRunning(true);
-    setCounter((prevCount) => prevCount + 1);
+
     setDice((oldDice) =>
       oldDice.map((die) => {
         return die.id === id ? { ...die, isHeld: !die.isHeld } : die;
       })
     );
-  }
-
-  function setRecords() {
-    if (!bestRolls || counter < bestRolls) {
-      setBestRolls(counter);
-    }
   }
 
   const diceElement = dice.map((die) => (
@@ -108,13 +94,14 @@ function App() {
           Roll until all dice are the same. Click each die to freeze it at its
           current value between rolls.
         </p>
-        <h3>Rolls: {counter}</h3>
-        <GameStats time={time} />
+        {/*<h3>Rolls: {counter}</h3>*/}
+        <GameStats time={time} counter={counter} setCounter={setCounter} />
         <div className="container">{diceElement}</div>
         <button
           className="die-button"
           onClick={() => {
             rollDice();
+            setCounter(counter + 1);
           }}>
           {tenzies ? 'New Game' : 'Roll'}
         </button>
